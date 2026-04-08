@@ -1,0 +1,73 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-tertiary-fixed": "#1a1c1c",
+        "on-primary-container": "#444545",
+        "background": "#131313",
+        "tertiary-fixed-dim": "#c6c6c7",
+        "on-tertiary": "#2f3131",
+        "tertiary": "#cecece",
+        "on-secondary": "#3c2f00",
+        "secondary": "#e9c349",
+        "on-primary-fixed-variant": "#464747",
+        "on-tertiary-container": "#434546",
+        "inverse-primary": "#5d5e5f",
+        "on-surface-variant": "#d0c5af",
+        "surface-container-highest": "#353534",
+        "error-container": "#93000a",
+        "on-tertiary-fixed-variant": "#454747",
+        "surface-container-low": "#1c1b1b",
+        "inverse-on-surface": "#313030",
+        "surface-tint": "#c6c6c6",
+        "primary-fixed-dim": "#c6c6c6",
+        "surface-container": "#201f1f",
+        "on-error": "#690005",
+        "surface": "#131313",
+        "surface-bright": "#393939",
+        "primary-container": "#b3b3b3",
+        "primary": "#cecece",
+        "on-secondary-fixed": "#241a00",
+        "on-surface": "#e5e2e1",
+        "tertiary-container": "#b2b3b3",
+        "on-background": "#e5e2e1",
+        "on-secondary-container": "#342800",
+        "on-primary": "#2f3131",
+        "surface-container-high": "#2a2a2a",
+        "on-error-container": "#ffdad6",
+        "outline-variant": "#4d4635",
+        "surface-dim": "#131313",
+        "error": "#ffb4ab",
+        "secondary-fixed-dim": "#e9c349",
+        "on-primary-fixed": "#1a1c1c",
+        "inverse-surface": "#e5e2e1",
+        "primary-fixed": "#e3e2e2",
+        "secondary-fixed": "#ffe088",
+        "on-secondary-fixed-variant": "#574500",
+        "secondary-container": "#af8d11",
+        "tertiary-fixed": "#e2e2e2",
+        "surface-container-lowest": "#0e0e0e",
+        "outline": "#99907c",
+        "surface-variant": "#353534"
+      },
+      borderRadius: {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      fontFamily: {
+        "headline": ["Noto Serif"],
+        "body": ["Manrope"],
+        "label": ["Manrope"]
+      }
+    },
+  },
+  plugins: [],
+}
