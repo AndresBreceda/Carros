@@ -5,6 +5,8 @@ import CarCatalog from './pages/CarCatalog';
 import BookingDetail from './pages/BookingDetail';
 import UserLogin from './pages/UserLogin';
 import UserDashboard from './pages/UserDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
@@ -14,9 +16,10 @@ export default function App() {
         <Route path="catalog" element={<CarCatalog />} />
         <Route path="booking/:id" element={<BookingDetail />} />
         <Route path="login" element={<UserLogin />} />
-        <Route path="dashboard" element={<UserDashboard />} />
         <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="/dashboard" element={<UserDashboard />} />
+      <Route path="/admin" element={<AdminDashboard />} />
     </Routes>
   );
 }
