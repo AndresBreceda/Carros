@@ -23,6 +23,8 @@ export default function UserDashboard() {
   }, []); // 👈 se ejecuta SOLO al entrar a la pantalla
 
 
+  const primerCarro = carros[0];
+  console.log(primerCarro);
   return (
     <div className="bg-background text-on-background min-h-screen flex">
       {/* SideNavBar Integration */}
@@ -44,7 +46,7 @@ export default function UserDashboard() {
             <span className="material-symbols-outlined text-xl">calendar_month</span>
             <span className="font-label text-sm uppercase tracking-wider">Bookings</span>
           </a>
-          <a href="#" className="text-[#CECECE] px-8 py-4 flex items-center space-x-4 hover:bg-[#1C1B1B] transition-all">
+          <a href="/catalog" className="text-[#CECECE] px-8 py-4 flex items-center space-x-4 hover:bg-[#1C1B1B] transition-all">
             <span className="material-symbols-outlined text-xl">directions_car</span>
             <span className="font-label text-sm uppercase tracking-wider">Vehicles</span>
           </a>
@@ -114,40 +116,41 @@ export default function UserDashboard() {
           </div>
 
           <div className="grid grid-cols-12 gap-8">
-            {/* Main Booking Card */}
-            <div className="col-span-8 bg-surface-container-low group relative overflow-hidden flex flex-col justify-end min-h-[450px]">
-              <div className="absolute inset-0 z-0">
-                <img
-                  src={carros.imagenUrl}
-                  alt="Porsche 911 GT3"
-                  className="w-full h-full object-cover grayscale-[20%] group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-              </div>
+            {primerCarro &&
+              < div className="col-span-8 bg-surface-container-low group relative overflow-hidden flex flex-col justify-end min-h-[450px]">
+                <div className="absolute inset-0 z-0">
+                  <img
+                    src={primerCarro.carro.imagenUrl}
+                    alt={primerCarro.carro.marca + " " + primerCarro.carro.modelo}
+                    className="w-full h-full object-cover grayscale-[20%] group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+                </div>
 
-              <div className="relative z-10 p-12 w-full flex items-end justify-between">
-                <div>
-                  <span className="bg-secondary text-on-secondary text-[10px] font-bold px-3 py-1 uppercase tracking-widest mb-4 inline-block">
-                    Active Now
-                  </span>
-                  <h4 className="font-headline text-4xl font-bold mb-2">{carros.marca} {carros.modelo}</h4>
-                  <div className="flex space-x-6 text-on-surface-variant text-sm">
-                    <div className="flex items-center space-x-2">
-                      <span className="material-symbols-outlined text-lg">calendar_today</span>
-                      <span className="font-body tracking-wider">{carros.date}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <span className="material-symbols-outlined text-lg">location_on</span>
-                      <span className="font-body tracking-wider">Los Angeles, CA</span>
+                <div className="relative z-10 p-12 w-full flex items-end justify-between">
+                  <div>
+                    <span className="bg-secondary text-on-secondary text-[10px] font-bold px-3 py-1 uppercase tracking-widest mb-4 inline-block">
+                      Active Now
+                    </span>
+                    <h4 className="font-headline text-4xl font-bold mb-2">{primerCarro.carro.marca} {primerCarro.carro.modelo}</h4>
+                    <div className="flex space-x-6 text-on-surface-variant text-sm">
+                      <div className="flex items-center space-x-2">
+                        <span className="material-symbols-outlined text-lg">calendar_today</span>
+                        <span className="font-body tracking-wider">{primerCarro.carro.fechaInicio}</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <span className="material-symbols-outlined text-lg">location_on</span>
+                        <span className="font-body tracking-wider">{primerCarro.estado}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className="bg-[#353534]/40 backdrop-blur-[20px] p-6 text-right border-l border-outline-variant/30">
-                  <p className="text-[10px] uppercase tracking-widest text-outline mb-1">Daily Rate</p>
-                  <p className="text-3xl font-bold text-on-surface">{carros.precio}</p>
+                  <div className="bg-[#353534]/40 backdrop-blur-[20px] p-6 text-right border-l border-outline-variant/30">
+                    <p className="text-[10px] uppercase tracking-widest text-outline mb-1">Daily Rate</p>
+                    <p className="text-3xl font-bold text-on-surface">{primerCarro.carro.precio}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            }
 
             {/* Specs / Action Sidebar */}
             <div className="col-span-4 space-y-8">
@@ -184,18 +187,18 @@ export default function UserDashboard() {
             <div className="flex items-center justify-between mb-8">
               <h3 className="font-headline text-2xl font-bold">Past Experience</h3>
             </div>
-            {carros.map((carro) => (
-              <div key={carro.id} className="bg-surface-container-low p-6 flex items-center space-x-6 hover:bg-surface-container-high transition-colors cursor-pointer">
+            {carros.map((r) => (
+              <div key={r.carro.id} className="bg-surface-container-low p-6 flex items-center space-x-6 hover:bg-surface-container-high transition-colors cursor-pointer">
                 <div className="w-24 h-16 bg-surface-container-highest overflow-hidden">
-                  <img src={carro.imagenUrl} alt={carro.marca} className="w-full h-full object-cover opacity-60" />
+                  <img src={r.carro.imagenUrl} alt={r.carro.marca} className="w-full h-full object-cover opacity-60" />
                 </div>
                 <div className="flex-grow">
-                  <h5 className="font-headline text-lg font-bold">{carro.marca} {carro.modelo}</h5>
-                  <p className="font-label text-xs text-on-surface-variant uppercase tracking-widest">{carro.date} • {carro.duration} • {carro.location}</p>
+                  <h5 className="font-headline text-lg font-bold">{r.carro.marca} {r.carro.modelo}</h5>
+                  <p className="font-label text-xs text-on-surface-variant uppercase tracking-widest">{r.carro.date} • {r.carro.duration} • {r.carro.location}</p>
                 </div>
                 <div className="text-right">
                   <span className="font-label text-xs text-outline block mb-1">TOTAL</span>
-                  <span className="text-lg font-bold text-on-surface">{carro.precio}</span>
+                  <span className="text-lg font-bold text-on-surface">{r.carro.precio}</span>
                 </div>
               </div>
             ))}

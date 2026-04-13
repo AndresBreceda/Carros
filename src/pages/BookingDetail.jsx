@@ -104,9 +104,9 @@ export default function BookingDetail() {
           </div>
           <div>
             <label className="block font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-2">Delivery Location</label>
-            <input value={estado} type="text" placeholder="Enter Airport, Hotel, or Private Address" className="w-full bg-surface-container-high border-b-2 border-outline-variant p-4 font-body text-on-background focus:outline-none focus:border-secondary" />
+            <input value={estado} onChange={(e) => setEstado(e.target.value)} type="text" placeholder="Enter Airport, Hotel, or Private Address" className="w-full bg-surface-container-high border-b-2 border-outline-variant p-4 font-body text-on-background focus:outline-none focus:border-secondary" />
           </div>
-          <button onClick={handleReserva} onChange={(e) => setEstado(e.target.value)} className="w-full gold-gradient text-on-secondary py-5 font-label uppercase tracking-[0.2em] text-xs font-bold transition-transform active:scale-95">Confirm Request</button>
+          <button onClick={handleReserva} className="w-full gold-gradient text-on-secondary py-5 font-label uppercase tracking-[0.2em] text-xs font-bold transition-transform active:scale-95">Confirm Request</button>
         </form>
       </div>
 

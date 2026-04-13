@@ -37,7 +37,6 @@ namespace Naorobi.Api.Controllers
         }
 
         // 🔐 Crear carro (requiere token)
-        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Carro carro)
         {
@@ -46,7 +45,6 @@ namespace Naorobi.Api.Controllers
         }
 
         // 🔐 Actualizar
-        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] Carro updatedCarro)
         {
@@ -59,7 +57,6 @@ namespace Naorobi.Api.Controllers
         }
 
         // 🔐 Eliminar
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {

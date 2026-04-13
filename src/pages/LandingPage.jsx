@@ -6,14 +6,14 @@ export default function LandingPage() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img className="w-full h-full object-cover brightness-50" alt="Side profile of a sleek black luxury grand tourer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNQ3fcBB5vKFMu8_E3ntramEYq7RACzX7WcxDiKIKjO3jyExwxcfDF26iD9AYC69LEGa9Li8vbMRQG3GLVXTeaFOa_8ZeXFe0Z5GYWU-s1UmtuY3ni_bNnFHgMqAB0amRxeQjPLJ2iObOd6oORRVTKcat3hThNwXpufY7GtMRij7EBaWTdmqG0oZDZ6gCfyB8cTss-7cxB2PTrXRUfw1gKNaEQtECNrFLaQiq9q7Xv5PCnHVboiZkNZQChuA3BuT-ynX_XEbQwuylt"/>
+          <img className="w-full h-full object-cover brightness-50" alt="Side profile of a sleek black luxury grand tourer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNQ3fcBB5vKFMu8_E3ntramEYq7RACzX7WcxDiKIKjO3jyExwxcfDF26iD9AYC69LEGa9Li8vbMRQG3GLVXTeaFOa_8ZeXFe0Z5GYWU-s1UmtuY3ni_bNnFHgMqAB0amRxeQjPLJ2iObOd6oORRVTKcat3hThNwXpufY7GtMRij7EBaWTdmqG0oZDZ6gCfyB8cTss-7cxB2PTrXRUfw1gKNaEQtECNrFLaQiq9q7Xv5PCnHVboiZkNZQChuA3BuT-ynX_XEbQwuylt" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-transparent to-transparent opacity-80"></div>
         </div>
         <div className="relative z-10 px-12 md:px-24 max-w-4xl pt-24">
           <span className="font-label text-secondary uppercase tracking-[0.4em] text-xs mb-4 block">Excellence in Motion</span>
           <h1 className="font-headline text-5xl md:text-8xl text-on-background leading-tight mb-8">The Ultimate Luxury Experience</h1>
           <div className="flex items-center space-x-8">
-            <button className="gold-gradient text-on-secondary px-10 py-4 font-label uppercase tracking-widest text-xs rounded-sm font-bold transition-transform active:scale-95">Explore the Collection</button>
+            <a href="/catalog" className="gold-gradient text-on-secondary px-10 py-4 font-label uppercase tracking-widest text-xs rounded-sm font-bold transition-transform active:scale-95">Explore the Collection</a>
             <div className="h-[1px] w-24 bg-outline-variant"></div>
             <span className="font-label text-on-surface-variant uppercase tracking-widest text-[10px]">Since 2024</span>
           </div>
@@ -33,7 +33,7 @@ export default function LandingPage() {
           {/* Car 1: Large Feature */}
           <div className="md:col-span-8 group">
             <div className="relative aspect-[16/9] overflow-hidden bg-surface-container-low">
-              <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Phantom Ghost" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo8Nk936Gi0XEudmT1gH37kccSvgLy7vz40Itk7yzYc9DKBN-Z3RlXeZsAIUA-cpOyLTieMW25GfzRto1GmaNVkGisRrOQxefVLQikxmbBtmNAWw9SDRUQabZYNAyU24a-CiL7Dx7jmZE7JgundJFuFjSLluIfwwNQ5r_zZhPSHOlIVeAr_lbcBpn-T6-S1Okr_xMNQ7sSRJVTsYBs_80FWip261M903R8q2cyiGJk7ZCYZNDG5nWfQY6dB_s3sQCvh-re79OUB4S3"/>
+              <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Phantom Ghost" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo8Nk936Gi0XEudmT1gH37kccSvgLy7vz40Itk7yzYc9DKBN-Z3RlXeZsAIUA-cpOyLTieMW25GfzRto1GmaNVkGisRrOQxefVLQikxmbBtmNAWw9SDRUQabZYNAyU24a-CiL7Dx7jmZE7JgundJFuFjSLluIfwwNQ5r_zZhPSHOlIVeAr_lbcBpn-T6-S1Okr_xMNQ7sSRJVTsYBs_80FWip261M903R8q2cyiGJk7ZCYZNDG5nWfQY6dB_s3sQCvh-re79OUB4S3" />
               <div className="absolute bottom-0 left-0 right-0 glass-panel p-8 flex justify-between items-center">
                 <div>
                   <h3 className="font-headline text-2xl text-on-background">Phantom Ghost</h3>
@@ -65,7 +65,7 @@ export default function LandingPage() {
           <div className="md:col-span-6 group">
             <div className="bg-surface-container-low p-2">
               <div className="aspect-[4/3] relative overflow-hidden">
-                <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Starlight SUV" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSGQUxCibqCfih9zBgadQmCX1SjK5bb8lC_Kq2E05VUFMBjlxduTRsEfu7ZE2HxbitzdfnRAvinIRaxyeXzHm1sZQf1flZ46D7TJZqOkPP_XsW2ch0jnm8ckPvWZEj9sVZoEPX6nbiccORfUEpO-AjoyprN67p68-RSxKAyr21GG_B7rSr6qELWlSr-QASC4bbrFHhTq_FuLRXSN3b5Eyxvs9Lpw2LVy7rio5Y7qo8HjqJosLTYEoaeczKE7yasW0tY79aEWnT11CK"/>
+                <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Starlight SUV" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSGQUxCibqCfih9zBgadQmCX1SjK5bb8lC_Kq2E05VUFMBjlxduTRsEfu7ZE2HxbitzdfnRAvinIRaxyeXzHm1sZQf1flZ46D7TJZqOkPP_XsW2ch0jnm8ckPvWZEj9sVZoEPX6nbiccORfUEpO-AjoyprN67p68-RSxKAyr21GG_B7rSr6qELWlSr-QASC4bbrFHhTq_FuLRXSN3b5Eyxvs9Lpw2LVy7rio5Y7qo8HjqJosLTYEoaeczKE7yasW0tY79aEWnT11CK" />
               </div>
               <div className="p-8">
                 <h3 className="font-headline text-xl">Starlight SUV</h3>
@@ -79,7 +79,7 @@ export default function LandingPage() {
           <div className="md:col-span-6 group mt-0 md:mt-24">
             <div className="bg-surface-container-low p-2">
               <div className="aspect-[4/3] relative overflow-hidden">
-                <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Azure Convertible" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7ZXEDD0Hj53N3e3JtBEaCmDY4Y73kigBgxJCTOxLFahfsY1o4R_5vsGkhz2KVVLCUw37zu1hojZqGVNE4oz2UzMT110FvV6RfTTpEGGw9mYkhmhrspXwYKj_RXpjQ_jBKHZRLaLulpdsBMr0XHLpbkvxhGhN7MH6VANaN2mOl0-_sP9DHk8MKyTVm0KnwmLZcLCFtiWJnCcad90_s0QZM-IfsZMW-VZrFBVYE9Mge5kJicCPB1OVcP95u7L-xIR33q0wxqv1Bdkfo"/>
+                <img className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Azure Convertible" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7ZXEDD0Hj53N3e3JtBEaCmDY4Y73kigBgxJCTOxLFahfsY1o4R_5vsGkhz2KVVLCUw37zu1hojZqGVNE4oz2UzMT110FvV6RfTTpEGGw9mYkhmhrspXwYKj_RXpjQ_jBKHZRLaLulpdsBMr0XHLpbkvxhGhN7MH6VANaN2mOl0-_sP9DHk8MKyTVm0KnwmLZcLCFtiWJnCcad90_s0QZM-IfsZMW-VZrFBVYE9Mge5kJicCPB1OVcP95u7L-xIR33q0wxqv1Bdkfo" />
               </div>
               <div className="p-8">
                 <h3 className="font-headline text-xl">Azure Convertible</h3>

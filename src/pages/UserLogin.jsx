@@ -19,13 +19,20 @@ export default function UserLogin() {
         }),
       });
 
+      console.log(email);
       const data = await response.json();
 
       console.log(data);
 
       if (data.token) {
         localStorage.setItem("token", data.token);
-        window.location.href = "/dashboard"; // redirigir
+
+        if (email.includes("admin")) {
+          window.location.href = "/admin";
+        } else {
+          window.location.href = "/dashboard";
+        }
+
       } else {
         alert("Credenciales incorrectas");
       }

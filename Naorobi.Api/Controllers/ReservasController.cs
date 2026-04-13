@@ -17,19 +17,13 @@ namespace Naorobi.Api.Controllers
             _database = database;
 
             _reservas = database.GetCollection<Reserva>("Reservas");
-            _carros = database.GetCollection<Carro>("Carros");
+            // ✅ Mismo nombre de colección que CarrosController
+            _carros = database.GetCollection<Carro>("carros");
         }
 
-        // ✅ GET: api/reservas
+        // ✅ GET: api/reservas  — devuelve reservas con el carro incluido
         [HttpGet]
-        public async Task<ActionResult<List<Reserva>>> Get()
-        {
-            var reservas = await _reservas.Find(_ => true).ToListAsync();
-            return Ok(reservas);
-        }
-
-        [HttpGet("con-carros")]
-        public async Task<ActionResult> GetReservasConCarros()
+        public async Task<ActionResult> Get()
         {
             var reservas = await _reservas.Find(_ => true).ToListAsync();
 
@@ -37,8 +31,9 @@ namespace Naorobi.Api.Controllers
 
             foreach (var reserva in reservas)
             {
+                // ✅ Comparación directa de string  (sin .ToString() extra)
                 var carro = await _carros
-                    .Find(c => c.Id.ToString() == reserva.Id_Carro.ToString())
+                    .Find(c => c.Id == reserva.Id_Carro)
                     .FirstOrDefaultAsync();
 
                 resultado.Add(new
@@ -46,6 +41,9 @@ namespace Naorobi.Api.Controllers
                     reserva.Id,
                     reserva.Fecha_Inicio,
                     reserva.Fecha_Final,
+                    reserva.Id_Carro,
+                    reserva.Id_Usuario,
+                    reserva.Estado,
                     Carro = carro
                 });
             }
@@ -53,16 +51,36 @@ namespace Naorobi.Api.Controllers
             return Ok(resultado);
         }
 
+        // GET: api/reservas/con-carros  (mantenido por compatibilidad)
+        [HttpGet("con-carros")]
+        public async Task<ActionResult> GetReservasConCarros()
+        {
+            return await Get();
+        }
+
         // ✅ GET: api/reservas/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Reserva>> GetById(string id)
+        public async Task<ActionResult> GetById(string id)
         {
             var reserva = await _reservas.Find(r => r.Id == id).FirstOrDefaultAsync();
 
             if (reserva == null)
                 return NotFound();
 
-            return Ok(reserva);
+            var carro = await _carros
+                .Find(c => c.Id == reserva.Id_Carro)
+                .FirstOrDefaultAsync();
+
+            return Ok(new
+            {
+                reserva.Id,
+                reserva.Fecha_Inicio,
+                reserva.Fecha_Final,
+                reserva.Id_Carro,
+                reserva.Id_Usuario,
+                reserva.Estado,
+                Carro = carro
+            });
         }
 
         // ✅ POST: api/reservas
@@ -70,7 +88,22 @@ namespace Naorobi.Api.Controllers
         public async Task<ActionResult> Create(Reserva reserva)
         {
             await _reservas.InsertOneAsync(reserva);
-            return Ok(reserva);
+
+            // Devuelve la reserva con el carro incluido
+            var carro = await _carros
+                .Find(c => c.Id == reserva.Id_Carro)
+                .FirstOrDefaultAsync();
+
+            return Ok(new
+            {
+                reserva.Id,
+                reserva.Fecha_Inicio,
+                reserva.Fecha_Final,
+                reserva.Id_Carro,
+                reserva.Id_Usuario,
+                reserva.Estado,
+                Carro = carro
+            });
         }
 
         // ✅ PUT: api/reservas/{id}
@@ -82,7 +115,20 @@ namespace Naorobi.Api.Controllers
             if (result.MatchedCount == 0)
                 return NotFound();
 
-            return Ok(reserva);
+            var carro = await _carros
+                .Find(c => c.Id == reserva.Id_Carro)
+                .FirstOrDefaultAsync();
+
+            return Ok(new
+            {
+                reserva.Id,
+                reserva.Fecha_Inicio,
+                reserva.Fecha_Final,
+                reserva.Id_Carro,
+                reserva.Id_Usuario,
+                reserva.Estado,
+                Carro = carro
+            });
         }
 
         // ✅ DELETE: api/reservas/{id}

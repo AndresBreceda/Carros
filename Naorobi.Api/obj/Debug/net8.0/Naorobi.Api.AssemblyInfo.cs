@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Naorobi.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8acabbc2728ac551ac014214e2019d577d2276db")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a683eeb46beb324a6270b297af243be7f2ec7f40")]
 [assembly: System.Reflection.AssemblyProductAttribute("Naorobi.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Naorobi.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
