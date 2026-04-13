@@ -1,25 +1,23 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Naorobi.Api.Models
 {
     public class Carro
     {
-        [Key]
-        public int Id_Carro { get; set; }
-        
-        public string Marca { get; set; }
-        public string Modelo { get; set; }
-        public int Precio_Renta_Diario { get; set; }
-        public int Caballos_Fuerza { get; set; }
-        public int Maxima_Velocidad { get; set; }
-        public string Tipo_Motor { get; set; }
-        public string Transmision { get; set; }
-        public string Tipo_Combustible { get; set; }
-        
-        public int Id_Admin { get; set; }
-        
-        [ForeignKey("Id_Admin")]
-        public Admin Admin { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? Id { get; set; }
+
+        public required string marca { get; set; }
+        public required string modelo { get; set; }
+        public int año { get; set; }
+        public decimal precio { get; set; }
+
+        public string tipo_Motor { get; set; } = string.Empty;
+        public string transmision { get; set; } = string.Empty;
+        public string tipo_Combustible { get; set; } = string.Empty;
+
+        public string imagenUrl { get; set; } = string.Empty;
     }
 }

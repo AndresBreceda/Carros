@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Naorobi.Api.Data;
+using MongoDB.Driver;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using BCrypt.Net;
+using Naorobi.Api.Models;
 
 namespace Naorobi.Api.Controllers
 {
@@ -12,16 +13,19 @@ namespace Naorobi.Api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IMongoCollection<Usuario> _usuarios;
+        private readonly IMongoCollection<Admin> _admins;
         private readonly IConfiguration _configuration;
 
-        public AuthController(AppDbContext context, IConfiguration configuration)
+        public AuthController(IMongoDatabase database, IConfiguration configuration)
         {
-            _context = context;
+            _usuarios = database.GetCollection<Usuario>("Usuarios");
+            _admins = database.GetCollection<Admin>("Admins");
             _configuration = configuration;
         }
 
-        public class LoginRequest {
+        public class LoginRequest
+        {
             public string Email { get; set; }
             public string Password { get; set; }
         }
@@ -29,24 +33,30 @@ namespace Naorobi.Api.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var admin = await _context.Admins.FirstOrDefaultAsync(a => a.Email == request.Email && a.Contraseña == request.Password);
-            if (admin != null)
-            {
-                return Ok(new { token = GenerateJwtToken(admin.Email, "Admin", admin.Id_Admin) });
-            }
+            var usuario = await _usuarios
+                .Find(u => u.Email == request.Email)
+                .FirstOrDefaultAsync();
 
-            var usuario = await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == request.Email && u.Contraseña == request.Password);
-            if (usuario != null)
-            {
-                return Ok(new { token = GenerateJwtToken(usuario.Email, "Usuario", usuario.Id_Usuario) });
-            }
+            if (usuario == null)
+                return Unauthorized(new { message = "Credenciales inválidas" });
 
-            return Unauthorized(new { message = "Email o contraseña incorrectos" });
+            // 🔐 Verificar hash
+            bool isValid = BCrypt.Net.BCrypt.Verify(request.Password, usuario.Contraseña);
+
+            if (!isValid)
+                return Unauthorized(new { message = "Credenciales inválidas" });
+
+            return Ok(new
+            {
+                token = GenerateJwtToken(usuario.Email, "Usuario", usuario.Id)
+            });
         }
-
-        private string GenerateJwtToken(string email, string role, int id)
+        private string GenerateJwtToken(string email, string role, string id)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+            var securityKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)
+            );
+
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -60,10 +70,22 @@ namespace Naorobi.Api.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddHours(2),
-                signingCredentials: credentials);
+                expires: DateTime.UtcNow.AddHours(2),
+                signingCredentials: credentials
+            );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] Usuario usuario)
+        {
+            // 🔐 Hashear contraseña
+            usuario.Contraseña = BCrypt.Net.BCrypt.HashPassword(usuario.Contraseña);
+
+            await _usuarios.InsertOneAsync(usuario);
+
+            return Ok(new { message = "Usuario creado" });
         }
     }
 }

@@ -1,16 +1,16 @@
-using System.ComponentModel.DataAnnotations;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Naorobi.Api.Models
 {
     public class Usuario
     {
-        [Key]
-        public int Id_Usuario { get; set; }
-        
-        [Required]
-        public string Email { get; set; }
-        
-        [Required]
-        public string Contraseña { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; } = string.Empty;
+
+        public required string Email { get; set; }
+        public required string Contraseña { get; set; }
     }
+
 }

@@ -1,18 +1,40 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Naorobi.Api.Data;
+using MongoDB.Driver;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// 📦 =======================
+// MongoDB Configuration
+// =========================
+var mongoSettings = builder.Configuration.GetSection("MongoDB");
+var connectionUri = mongoSettings["ConnectionString"];
+var databaseName = mongoSettings["DatabaseName"];
 
-// Add DbContext
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+// ⚠️ Validación
+if (string.IsNullOrEmpty(connectionUri) || string.IsNullOrEmpty(databaseName))
+{
+    throw new Exception("Falta la configuración de MongoDB en appsettings.json");
+}
 
-// Add JWT Authentication
+// 🔗 Mongo Client
+builder.Services.AddSingleton<IMongoClient>(sp =>
+{
+    return new MongoClient(connectionUri);
+});
+
+// 🔗 Mongo Database
+builder.Services.AddScoped(sp =>
+{
+    var client = sp.GetRequiredService<IMongoClient>();
+    return client.GetDatabase(databaseName);
+});
+
+
+// 🔐 =======================
+// JWT Authentication
+// =======================
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -22,18 +44,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
+
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+            )
         };
     });
 
+
+// 📚 =======================
+// Services
+// =======================
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure CORS to allow frontend
+// 🌐 =======================
+// CORS
+// =======================
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -44,9 +75,16 @@ builder.Services.AddCors(options =>
     });
 });
 
+
+// 🚀 =======================
+// Build App
+// =======================
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+// 🔧 =======================
+// Pipeline
+// =======================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

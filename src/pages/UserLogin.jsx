@@ -1,6 +1,40 @@
-import React from 'react';
+import { useState } from "react";
 
 export default function UserLogin() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5206/api/Auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      console.log(data);
+
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+        window.location.href = "/dashboard"; // redirigir
+      } else {
+        alert("Credenciales incorrectas");
+      }
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-12 bg-background relative overflow-hidden">
       {/* Decorative Blur Effect */}
@@ -15,6 +49,8 @@ export default function UserLogin() {
             <input
               type="email"
               placeholder="Email or Membership ID"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-transparent border-b-2 border-outline-variant pb-4 font-body text-on-background placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors"
             />
           </div>
@@ -22,6 +58,8 @@ export default function UserLogin() {
             <input
               type="password"
               placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full bg-transparent border-b-2 border-outline-variant pb-4 font-body text-on-background placeholder-on-surface-variant focus:outline-none focus:border-secondary transition-colors"
             />
           </div>
@@ -34,7 +72,7 @@ export default function UserLogin() {
             <a href="#" className="font-label text-[10px] uppercase tracking-widest text-on-surface-variant hover:text-secondary transition-colors">Reset Key</a>
           </div>
 
-          <button type="submit" className="w-full mt-12 gold-gradient text-on-secondary py-4 font-label uppercase tracking-[0.2em] text-xs font-bold transition-transform hover:brightness-110 active:scale-[0.98]">Enter the Gallery</button>
+          <button type="submit" onClick={handleLogin} className="w-full mt-12 gold-gradient text-on-secondary py-4 font-label uppercase tracking-[0.2em] text-xs font-bold transition-transform hover:brightness-110 active:scale-[0.98]">Enter the Gallery</button>
         </form>
 
         <div className="mt-12 text-center">

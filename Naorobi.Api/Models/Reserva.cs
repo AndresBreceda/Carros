@@ -1,23 +1,17 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace Naorobi.Api.Models
+public class Reserva
 {
-    public class Reserva
-    {
-        [Key]
-        public int Id_Reserva { get; set; }
-        
-        public DateTime Fecha_Inicio { get; set; }
-        public DateTime Fecha_Final { get; set; }
-        
-        public int Id_Carro { get; set; }
-        [ForeignKey("Id_Carro")]
-        public Carro Carro { get; set; }
-        
-        public int Id_Usuario { get; set; }
-        [ForeignKey("Id_Usuario")]
-        public Usuario Usuario { get; set; }
-    }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
+
+    public DateTime Fecha_Inicio { get; set; }
+    public DateTime Fecha_Final { get; set; }
+
+    public string Id_Carro { get; set; }
+    public string Id_Usuario { get; set; }
+
+    public string Estado { get; set; }
 }
