@@ -14,7 +14,7 @@ export default function Layout() {
           <Link className="font-label uppercase tracking-[0.1em] text-[12px] text-[#E5E2E1] hover:text-[#D4AF37] transition-colors" to="/catalog">Catalog</Link>
           <Link className="font-label uppercase tracking-[0.1em] text-[12px] text-[#E5E2E1] hover:text-[#D4AF37] transition-colors" to="/dashboard">Profile</Link>
           <Link className="font-label uppercase tracking-[0.1em] text-[12px] text-[#E5E2E1] hover:text-[#D4AF37] transition-colors" to="/login">Login</Link>
-          <Link to="/booking/1" className="gold-gradient text-on-secondary px-8 py-2 font-label uppercase tracking-widest text-[12px] rounded-sm font-bold">Book Now</Link>
+          <Link to="/catalog" className="gold-gradient text-on-secondary px-8 py-2 font-label uppercase tracking-widest text-[12px] rounded-sm font-bold">Book Now</Link>
         </div>
         <div className="md:hidden">
           <span className="material-symbols-outlined text-on-background">menu</span>

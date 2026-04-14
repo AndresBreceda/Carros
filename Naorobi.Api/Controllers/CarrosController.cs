@@ -36,7 +36,6 @@ namespace Naorobi.Api.Controllers
             return Ok(carro);
         }
 
-        // 🔐 Crear carro (requiere token)
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Carro carro)
         {

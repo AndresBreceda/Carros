@@ -29,7 +29,7 @@ export default function BookingDetail() {
   // 🔥 crear reserva
   const handleReserva = async (e) => {
     e.preventDefault();
-
+    const userId = localStorage.getItem("userId");
     try {
       const res = await fetch("http://localhost:5206/api/reservas", {
         method: "POST",
@@ -40,7 +40,7 @@ export default function BookingDetail() {
           fecha_Inicio: fechaInicio,
           fecha_Final: fechaFinal,
           id_Carro: id,
-          id_Usuario: "69dbebc86a64d9c180097fe0",
+          id_Usuario: userId,
           estado: estado,
         }),
       });

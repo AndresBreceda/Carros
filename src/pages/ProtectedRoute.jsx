@@ -3,8 +3,9 @@ import { jwtDecode } from "jwt-decode";
 
 const ProtectedRoute = ({ children }) => {
     const token = localStorage.getItem("token");
+    console.log("token", token)
 
-    if (!token) {
+    if (!token || token == undefined) {
         return <Navigate to="/login" />;
     }
 

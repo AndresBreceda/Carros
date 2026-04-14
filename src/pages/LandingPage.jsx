@@ -1,6 +1,11 @@
 import React from 'react';
 
 export default function LandingPage() {
+
+  localStorage.removeItem("token");
+  localStorage.removeItem("userEmail");
+
+
   return (
     <>
       {/* Hero Section */}

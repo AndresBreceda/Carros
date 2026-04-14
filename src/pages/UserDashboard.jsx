@@ -6,21 +6,24 @@ export default function UserDashboard() {
 
   const [carros, setCarros] = useState([]);
 
+  const email = localStorage.getItem("userEmail");
+
   useEffect(() => {
-    const fetchCarros = async () => {
+    const fetchReservas = async () => {
+      const userId = localStorage.getItem("userId");
+      if (!userId) return;
+
       try {
-        const response = await fetch("http://localhost:5206/api/reservas/");
+        const response = await fetch(`http://localhost:5206/api/reservas/usuario/${userId}`);
         const data = await response.json();
         setCarros(data);
-
-        console.log(data)
       } catch (error) {
         console.error("Error:", error);
       }
     };
 
-    fetchCarros();
-  }, []); // 👈 se ejecuta SOLO al entrar a la pantalla
+    fetchReservas();
+  }, []);
 
 
   const primerCarro = carros[0];
@@ -70,7 +73,7 @@ export default function UserDashboard() {
               />
             </div>
             <div>
-              <p className="text-xs font-bold text-on-surface uppercase tracking-tight">Alexander Rossi</p>
+              <p className="text-xs font-bold text-on-surface uppercase tracking-tight">{email}</p>
               <p className="text-[10px] text-outline-variant uppercase">Premium Access</p>
             </div>
           </div>
@@ -136,7 +139,7 @@ export default function UserDashboard() {
                     <div className="flex space-x-6 text-on-surface-variant text-sm">
                       <div className="flex items-center space-x-2">
                         <span className="material-symbols-outlined text-lg">calendar_today</span>
-                        <span className="font-body tracking-wider">{primerCarro.carro.fechaInicio}</span>
+                        <span className="font-body tracking-wider">{primerCarro.fecha_Inicio}</span>
                       </div>
                       <div className="flex items-center space-x-2">
                         <span className="material-symbols-outlined text-lg">location_on</span>
@@ -194,7 +197,7 @@ export default function UserDashboard() {
                 </div>
                 <div className="flex-grow">
                   <h5 className="font-headline text-lg font-bold">{r.carro.marca} {r.carro.modelo}</h5>
-                  <p className="font-label text-xs text-on-surface-variant uppercase tracking-widest">{r.carro.date} • {r.carro.duration} • {r.carro.location}</p>
+                  <p className="font-label text-xs text-on-surface-variant uppercase tracking-widest">{r.fecha_Inicio} • {r.fecha_Final} • {r.estado}</p>
                 </div>
                 <div className="text-right">
                   <span className="font-label text-xs text-outline block mb-1">TOTAL</span>
@@ -214,23 +217,12 @@ export default function UserDashboard() {
               <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
                 <div className="space-y-2">
                   <label className="font-label text-[10px] uppercase tracking-[0.2em] text-outline">Full Name</label>
-                  <input type="text" defaultValue="Alexander Rossi" className="w-full bg-surface-container-high border-none border-b-2 border-outline-variant/30 px-0 py-3 text-on-surface focus:ring-0 focus:border-secondary transition-colors" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-8">
-                  <div className="space-y-2">
-                    <label className="font-label text-[10px] uppercase tracking-[0.2em] text-outline">Phone</label>
-                    <input type="tel" defaultValue="+1 (555) 012-3456" className="w-full bg-surface-container-high border-none border-b-2 border-outline-variant/30 px-0 py-3 text-on-surface focus:ring-0 focus:border-secondary transition-colors" />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="font-label text-[10px] uppercase tracking-[0.2em] text-outline">Email</label>
-                    <input type="email" defaultValue="rossi.a@private.com" className="w-full bg-surface-container-high border-none border-b-2 border-outline-variant/30 px-0 py-3 text-on-surface focus:ring-0 focus:border-secondary transition-colors" />
-                  </div>
+                  <input type="text" defaultValue={email} className="w-full bg-surface-container-high border-none border-b-2 border-outline-variant/30 px-0 py-3 text-on-surface focus:ring-0 focus:border-secondary transition-colors" />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="font-label text-[10px] uppercase tracking-[0.2em] text-outline">Delivery Address</label>
-                  <input type="text" defaultValue="90210 Wilshire Blvd, Beverly Hills, CA" className="w-full bg-surface-container-high border-none border-b-2 border-outline-variant/30 px-0 py-3 text-on-surface focus:ring-0 focus:border-secondary transition-colors" />
+                  <label className="font-label text-[10px] uppercase tracking-[0.2em] text-outline">New Password</label>
+                  <input type="text" defaultValue="Your new password" className="w-full bg-surface-container-high border-none border-b-2 border-outline-variant/30 px-0 py-3 text-on-surface focus:ring-0 focus:border-secondary transition-colors" />
                 </div>
 
                 <button type="submit" className="bg-on-surface text-background font-bold uppercase tracking-[0.15em] text-xs py-4 px-10 hover:bg-secondary transition-colors">
@@ -245,8 +237,8 @@ export default function UserDashboard() {
         <footer className="mt-32 w-full py-12 border-t border-[#4D4635]/20 flex flex-col items-center justify-center space-y-6">
           <h1 className="font-headline text-[#E5E2E1] text-xl tracking-widest">NAOROBI</h1>
           <div className="flex space-x-8">
-            <a href="#" className="font-label text-[11px] tracking-widest uppercase text-[#CECECE] hover:text-[#D4AF37] transition-colors">Instagram</a>
-            <a href="#" className="font-label text-[11px] tracking-widest uppercase text-[#CECECE] hover:text-[#D4AF37] transition-colors">LinkedIn</a>
+            <a href="https://www.instagram.com" className="font-label text-[11px] tracking-widest uppercase text-[#CECECE] hover:text-[#D4AF37] transition-colors">Instagram</a>
+            <a href="https://www.linkedin.com" className="font-label text-[11px] tracking-widest uppercase text-[#CECECE] hover:text-[#D4AF37] transition-colors">LinkedIn</a>
             <a href="#" className="font-label text-[11px] tracking-widest uppercase text-[#CECECE] hover:text-[#D4AF37] transition-colors">Contact</a>
             <a href="#" className="font-label text-[11px] tracking-widest uppercase text-[#CECECE] hover:text-[#D4AF37] transition-colors">Privacy</a>
           </div>

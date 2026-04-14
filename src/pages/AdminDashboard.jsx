@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const API_URL = 'http://localhost:5062';
+const API_URL = 'http://localhost:5206';
 
 export default function AdminDashboard() {
   const [form, setForm] = useState({
@@ -27,6 +27,8 @@ export default function AdminDashboard() {
     setStatus('loading');
     setErrorMsg('');
 
+
+
     try {
       const response = await fetch(`${API_URL}/api/Carros`, {
         method: 'POST',
@@ -38,9 +40,9 @@ export default function AdminDashboard() {
           modelo: form.modelo,
           año: parseInt(form.año) || 0,
           precio: parseFloat(form.precio) || 0,
-          tipo_Motor: form.tipo_Motor,
-          transmision: form.transmision,
-          tipo_Combustible: form.tipo_Combustible,
+          tipo_Motor: 'V8',
+          transmision: 'Automatico',
+          tipo_Combustible: 'Gasolina',
           imagenUrl: form.imagenUrl,
         }),
       });

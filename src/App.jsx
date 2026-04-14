@@ -17,10 +17,19 @@ export default function App() {
       {/* 🌐 Layout público */}
       <Route path="/" element={<Layout />}>
         <Route index element={<LandingPage />} />
-        <Route path="catalog" element={<CarCatalog />} />
         <Route path="/login" element={<UserLogin />} />
         <Route path="booking/:id" element={<BookingDetail />} />
         <Route path="*" element={<NotFound />} />
+
+        {/* 🔐 Catalog protegido pero dentro del Layout */}
+        <Route
+          path="catalog"
+          element={
+            <ProtectedRoute>
+              <CarCatalog />
+            </ProtectedRoute>
+          }
+        />
       </Route>
 
       {/* 🔐 RUTAS PROTEGIDAS */}

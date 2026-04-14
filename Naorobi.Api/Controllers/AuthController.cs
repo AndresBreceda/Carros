@@ -48,7 +48,9 @@ namespace Naorobi.Api.Controllers
 
             return Ok(new
             {
-                token = GenerateJwtToken(usuario.Email, "Usuario", usuario.Id)
+                token = GenerateJwtToken(usuario.Email, "Usuario", usuario.Id),
+                userId = usuario.Id,
+                email = usuario.Email
             });
         }
         private string GenerateJwtToken(string email, string role, string id)
